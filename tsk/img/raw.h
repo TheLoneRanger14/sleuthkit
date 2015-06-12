@@ -18,6 +18,9 @@
 extern "C" {
 #endif
 
+    //AVB, DECAF image open
+    extern TSK_IMG_INFO *qemu_image_open(void *opaque, unsigned int a_ssize);
+
     extern TSK_IMG_INFO *raw_open(int a_num_img,
         const TSK_TCHAR * const a_images[], unsigned int a_ssize);
 
@@ -45,6 +48,16 @@ extern "C" {
         IMG_SPLIT_CACHE cache[SPLIT_CACHE];     /* small number of fds for open images */
         int next_slot;
     } IMG_RAW_INFO;
+
+
+    //AVB, DECAF image open struct
+    typedef struct _IMG_QEMU_INFO IMG_QEMU_INFO;
+    
+    struct _IMG_QEMU_INFO {
+        TSK_IMG_INFO img_info;
+        void * opaque; 
+    };
+
 
 #ifdef __cplusplus
 }
