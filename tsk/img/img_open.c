@@ -75,6 +75,7 @@ tsk_img_open(int num_img,
     unsigned int a_ssize)
 {
     TSK_IMG_INFO *img_info = NULL;
+	char *to_send=NULL;
 
     // Get rid of any old error messages laying around
     tsk_error_reset();
@@ -205,7 +206,8 @@ tsk_img_open(int num_img,
 #endif
 
     case QEMU_IMG:
-        img_info =  qemu_image_open((void *)images[0], a_ssize);
+		
+        img_info =  qemu_image_open((void*) *images, a_ssize);
         break;
 
     default:

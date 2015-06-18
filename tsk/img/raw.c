@@ -767,13 +767,12 @@ qemu_pread_t qemu_pread = NULL;
 /* prototype for bdrv_pread(..), int bdrv_read(BlockDriverState *bs, int64_t sector_num,
               uint8_t *buf, int nb_sectors) */
 static ssize_t
-qemu_read(TSK_IMG_INFO * img_info, TSK_OFF_T off, char *buf, size_t len)
+qemu_read(TSK_IMG_INFO *img_info, TSK_OFF_T off, char *buf, size_t len)
 {
 	IMG_QEMU_INFO *qemu_info = (IMG_QEMU_INFO *)img_info;
 	if(qemu_pread) return qemu_pread(qemu_info->opaque, off, buf, len);
 	return -1;
 }
-
 
 void
 qemu_imgstat(TSK_IMG_INFO * img_info, FILE * hFile)
@@ -807,21 +806,17 @@ qemu_image_open(void *opaque, unsigned int a_ssize)
     img_info = (TSK_IMG_INFO *) qemu_info;
 
     //AVB, does this matter?
-    img_info->itype = TSK_IMG_TYPE_RAW;
+    img_info->itype = QEMU_IMG;
 
     img_info->read = qemu_read;
     img_info->close = qemu_close;
     img_info->imgstat = qemu_imgstat;
 
     img_info->sector_size = 512;
-    if (a_ssize)
-        img_info->sector_size = a_ssize;
 
-
-
-    //AVB, This is the image
-    qemu_info->opaque = opaque;
-    img_info->size = 2048*1024; //fixme !!!
+    //AVB, This is BlockDriverState associated with the image
+    qemu_info->opaque = (void*) opaque;
+    img_info->size = 17179869184; //fixme !!!
  
     return img_info;
 }

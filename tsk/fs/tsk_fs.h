@@ -1046,6 +1046,11 @@ extern "C" {
         uint16_t id, uint8_t id_used, TSK_FS_DIR_WALK_FLAG_ENUM flags);
 
 
+
+	//AVB, prototype for qemu inode read
+	extern TSK_FS_FILE*
+	qemu_inode_read(TSK_FS_INFO *fs, unsigned int inode_number);
+
     enum TSK_FS_FLS_FLAG_ENUM {
         TSK_FS_FLS_NONE = 0x00,
         TSK_FS_FLS_DOT = 0x01,
